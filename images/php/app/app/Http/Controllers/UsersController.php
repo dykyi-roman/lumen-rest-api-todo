@@ -22,7 +22,7 @@ class UsersController extends Controller
 
             return response()->json(['status' => 'success', 'token' => 'Bearer ' . $token], 201);
         } catch (RegisterUserValidationException $exception) {
-            return response()->json(['status' => 'error', 'message' => $exception->getMessage()], 201);
+            return response()->json(['status' => 'error', 'message' => $exception->getMessage()], 500);
         }
     }
 

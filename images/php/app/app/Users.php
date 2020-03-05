@@ -29,6 +29,6 @@ class Users extends Model implements AuthenticatableContract, AuthorizableContra
 
     public function todo()
     {
-        return $this->hasMany(ToDo::class,'user_id');
+        return $this->hasMany(Todo::class,'user_id');
     }
 }

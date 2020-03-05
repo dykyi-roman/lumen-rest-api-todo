@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\todo\Application\Command;
 
+/**
+ * @see ClearUserTokenHandler
+ */
 final class ClearUserTokenCommand
 {
     private string $email;

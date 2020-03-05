@@ -6,7 +6,7 @@ namespace App\Exceptions;
 
 use Exception;
 
-final class RegisterUserValidationException extends Exception
+final class CreateTodoValidationException extends Exception
 {
 
 }

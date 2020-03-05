@@ -4,110 +4,71 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\todo\Domain\Todo\TodoApiTransformer;
+use App\todo\Domain\Todo\TodoManager;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Todo;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Throwable;
 
 class TodoController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+    private int $userId;
+
     public function __construct()
     {
         $this->middleware('auth');
+
+        $this->userId = Auth::user()->id;
     }
 
     public function index(Request $request): JsonResponse
     {
-        $todo = Auth::user()->todo()->get();
-
-        return response()->json(['status' => 'success', 'data' => $todo]);
+        return response()->json(['status' => 'success', 'data' => Auth::user()->todo()->get()]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return Response
-     */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
-        $this->validate($request, [
-            'todo' => 'required',
-            'description' => 'required',
-            'category' => 'required'
-        ]);
+        try {
+            TodoManager::init($this->userId)->create($request->toArray());
 
-        if (Auth::user()->todo()->Create($request->all())) {
+            return response()->json(['status' => 'success'], 201);
+        } catch (Throwable $exception) {
+            return response()->json(['status' => 'error', 'message' => $exception->getMessage()], 500);
+        }
+    }
+
+    public function show(int $id): JsonResponse
+    {
+        try {
+            $todo = TodoManager::init($this->userId)->show($id);
+            $transformer = new TodoApiTransformer($todo);
+
+            return response()->json(['status' => 'success', 'data' => $transformer->transform()]);
+        } catch (Throwable $exception) {
+            return response()->json(['status' => 'error', 'message' => $exception->getMessage()], 404);
+        }
+    }
+
+    public function update(Request $request, int $id): JsonResponse
+    {
+        try {
+            TodoManager::init($this->userId)->update($id, $request->toArray());
+
             return response()->json(['status' => 'success']);
+        } catch (Throwable $exception) {
+            return response()->json(['status' => 'error', 'message' => $exception->getMessage()], 500);
+        }
+    }
+
+    public function delete(int $id): JsonResponse
+    {
+        try {
+            TodoManager::init($this->userId)->delete(['id' => $id]);
+        } catch (Throwable $exception) {
+            return response()->json(['status' => 'error', 'message' => $exception->getMessage()], 500);
         }
 
-        return response()->json(['status' => 'error']);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $todo = Todo::where('id', $id)->get();
-
-        return response()->json($todo);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function edit($id)
-    {
-        $todo = Todo::where('id', $id)->get();
-
-        return view('todo.edittodo', ['todos' => $todo]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int                      $id
-     *
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        $this->validate($request, [
-            'todo' => 'filled',
-            'description' => 'filled',
-            'category' => 'filled'
-        ]);
-        $todo = Todo::find($id);
-        if ($todo->fill($request->all())->save()) {
-            return response()->json(['status' => 'success']);
-        }
-
-        return response()->json(['status' => 'error']);
-    }
-
-    public function destroy(int $id): JsonResponse
-    {
-        if (Todo::destroy($id)) {
-            return response()->json(['status' => 'success']);
-        }
-
-        return response()->json(['status' => 'error']);
+        return response()->json(['status' => 'success']);
     }
 }
