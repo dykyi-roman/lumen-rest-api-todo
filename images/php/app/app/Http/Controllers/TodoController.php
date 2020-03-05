@@ -16,10 +16,10 @@ class TodoController extends Controller
 {
     private int $userId;
 
-    public function __construct()
+    public function __construct(Auth $auth)
     {
         $this->middleware('auth');
-        $this->userId = Auth::user()->id;
+        $this->userId = $auth::user()->id;
     }
 
     public function index(Request $request): JsonResponse

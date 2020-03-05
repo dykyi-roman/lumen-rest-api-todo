@@ -11,7 +11,7 @@ use App\todo\Domain\Todo\TodoRepositoryInterface;
 
 final class TodoRepository implements TodoRepositoryInterface
 {
-    public function createTodo(CreateTodoCommand $command): void
+    public function createTodo(CreateTodoCommand $command): ?Todo
     {
         $todo = new Todo();
         $todo->name = $command->getName();
@@ -20,7 +20,11 @@ final class TodoRepository implements TodoRepositoryInterface
         $todo->status = $command->getStatus();
         $todo->datetime = $command->getDatetime();
         $todo->user_id = $command->getUserId();
-        $todo->save();
+        if ($todo->save()) {
+            return $todo;
+        }
+
+        return null;
     }
 
     public function deleteTodo(int $id): bool

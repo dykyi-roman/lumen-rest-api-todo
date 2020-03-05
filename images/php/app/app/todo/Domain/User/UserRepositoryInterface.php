@@ -15,7 +15,7 @@ interface UserRepositoryInterface
 
     public function refreshApiToken(string $email, string $token): void;
 
-    public function createNewUser(RegisterUserCommand $command): void;
+    public function createNewUser(RegisterUserCommand $command): ?Users;
 
     public function clearToken(string $email): void;
 }

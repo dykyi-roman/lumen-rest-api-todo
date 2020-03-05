@@ -1,6 +1,7 @@
 <?php
 
 use App\Providers\BackendServiceProvider;
+use App\Providers\EventServiceProvider;
 use Joselfonseca\LaravelTactician\Providers\LaravelTacticianServiceProvider;
 
 require_once __DIR__.'/../vendor/autoload.php';
@@ -114,6 +115,7 @@ $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 $app->withFacades();
 $app->withEloquent();
 $app->register(BackendServiceProvider::class);
+$app->register(EventServiceProvider::class);
 $app->register(LaravelTacticianServiceProvider::class);
 $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);

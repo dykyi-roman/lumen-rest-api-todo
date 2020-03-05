@@ -10,7 +10,7 @@ use App\todo\Application\Command\UpdateTodoCommand;
 
 interface TodoRepositoryInterface
 {
-    public function createTodo(CreateTodoCommand $command): void;
+    public function createTodo(CreateTodoCommand $command): ?Todo;
 
     public function updateTodo(int $id, UpdateTodoCommand $command): void;
 

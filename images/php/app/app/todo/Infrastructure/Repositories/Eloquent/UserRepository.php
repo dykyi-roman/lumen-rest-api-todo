@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 
 final class UserRepository implements UserRepositoryInterface
 {
-    public function createNewUser(RegisterUserCommand $command): void
+    public function createNewUser(RegisterUserCommand $command): ?Users
     {
         $user = new Users();
         $user->first_name = $command->getFirstName();
@@ -24,7 +24,11 @@ final class UserRepository implements UserRepositoryInterface
         $user->email = $command->getEmail();
         $user->api_token = $command->getToken();
 
-        $user->save();
+        if ($user->save()) {
+            return $user;
+        }
+
+        return null;
     }
 
     public function clearToken(string $email): void
