@@ -13,7 +13,6 @@ php:
   command: php-fpm
   links:
     - db
-    - cache
   ports:
     - "9001:9000"
   environment:
@@ -38,5 +37,10 @@ db:
     MYSQL_DATABASE: lumen
     MYSQL_USER: lumen
     MYSQL_PASSWORD: secret
-cache:
-  image: memcached
+adminer:
+  image: adminer
+  restart: always
+  links:
+    - db
+  ports:
+    - 8888:8080

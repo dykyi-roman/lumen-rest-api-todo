@@ -16,9 +16,9 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(['prefix' => 'api/'], static function ($app) {
-    $app->post('register/', 'RegisterController@store');
-    $app->get('login/', 'LoginController@login');
-    $app->get('logout/', 'LoginController@logout');
+    $app->post('register/', 'UsersController@store');
+    $app->get('login/', 'UsersController@login');
+    $app->get('logout/', 'UsersController@logout');
 
     $app->post('todo/', 'TodoController@store');
     $app->get('todo/', 'TodoController@index');

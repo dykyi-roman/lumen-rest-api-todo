@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Users;
+use App\todo\Domain\User\UserRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -24,9 +24,13 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app['auth']->viaRequest('api', static function ($request) {
+        /** @var UserRepositoryInterface $userRepository */
+        $userRepository = $this->app->get(UserRepositoryInterface::class);
+
+        $this->app['auth']->viaRequest('api', static function ($request) use ($userRepository) {
+
             if ($request->input('api_token')) {
-                return Users::where('api_token', $request->input('api_token'))->first();
+                return $userRepository->findUserByApiToken($request->input('api_token', ''));
             }
 
             if ($request->header('Authorization')) {
@@ -34,7 +38,7 @@ class AuthServiceProvider extends ServiceProvider
                 $exploded_bearer = explode(' ', $bearer);
                 $token = $exploded_bearer[1];
 
-                return Users::where('api_token', $token)->first();
+                return $userRepository->findUserByApiToken((string)$token);
             }
         });
     }

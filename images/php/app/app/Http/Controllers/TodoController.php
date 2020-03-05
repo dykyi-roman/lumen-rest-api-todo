@@ -1,11 +1,13 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Todo;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class TodoController extends Controller
@@ -20,17 +22,19 @@ class TodoController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $todo = Auth::user()->todo()->get();
 
-        return response()->json(['status' => 'success','data' => $todo]);
+        return response()->json(['status' => 'success', 'data' => $todo]);
     }
+
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -39,43 +43,49 @@ class TodoController extends Controller
             'description' => 'required',
             'category' => 'required'
         ]);
-        if(Auth::user()->todo()->Create($request->all())){
+
+        if (Auth::user()->todo()->Create($request->all())) {
             return response()->json(['status' => 'success']);
         }
 
         return response()->json(['status' => 'error']);
     }
+
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     *
+     * @return Response
      */
     public function show($id)
     {
         $todo = Todo::where('id', $id)->get();
 
         return response()->json($todo);
-
     }
+
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     *
+     * @return Response
      */
     public function edit($id)
     {
         $todo = Todo::where('id', $id)->get();
 
-        return view('todo.edittodo',['todos' => $todo]);
+        return view('todo.edittodo', ['todos' => $todo]);
     }
+
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param int                      $id
+     *
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -85,22 +95,19 @@ class TodoController extends Controller
             'category' => 'filled'
         ]);
         $todo = Todo::find($id);
-        if($todo->fill($request->all())->save()){
+        if ($todo->fill($request->all())->save()) {
             return response()->json(['status' => 'success']);
         }
 
         return response()->json(['status' => 'error']);
     }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+
+    public function destroy(int $id): JsonResponse
     {
-        if(Todo::destroy($id)){
+        if (Todo::destroy($id)) {
             return response()->json(['status' => 'success']);
         }
+
+        return response()->json(['status' => 'error']);
     }
 }
