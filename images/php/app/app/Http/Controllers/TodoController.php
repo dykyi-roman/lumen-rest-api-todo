@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\todo\Domain\Todo\TodoApiTransformer;
 use App\todo\Domain\Todo\TodoManager;
+use App\todo\Domain\Todo\TodoMapper;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,13 +19,15 @@ class TodoController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-
         $this->userId = Auth::user()->id;
     }
 
     public function index(Request $request): JsonResponse
     {
-        return response()->json(['status' => 'success', 'data' => Auth::user()->todo()->get()]);
+        $todo = TodoManager::init($this->userId)->filterBy($request->all());
+        $data = TodoMapper::init()->map($todo);
+
+        return response()->json(['status' => 'success', 'data' => $data]);
     }
 
     public function store(Request $request): JsonResponse

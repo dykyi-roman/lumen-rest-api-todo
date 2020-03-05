@@ -16,6 +16,8 @@ use Joselfonseca\LaravelTactician\CommandBusInterface;
 
 final class TodoManager
 {
+    private const FILTER_ACCESS_FIELDS = ['status', 'category', 'datetime'];
+
     private CommandBusInterface $bus;
 
     private array $middleware = [
@@ -62,6 +64,25 @@ final class TodoManager
         $todoRepository = app(TodoRepositoryInterface::class);
 
         return $todoRepository->show($id);
+    }
+
+    /**
+     * @param array $criteria
+     *
+     * @return Todo[] iterable
+     */
+    public function filterBy(array $criteria = []): iterable
+    {
+        foreach ($criteria as $key => $value) {
+            if (!in_array($key, self::FILTER_ACCESS_FIELDS, true)) {
+                unset($criteria[$key]);
+            }
+        }
+
+        /** @var TodoRepositoryInterface $todoRepository */
+        $todoRepository = app(TodoRepositoryInterface::class);
+
+        return $todoRepository->findByFilters($this->userId, $criteria);
     }
 
     public function delete(array $data = []): void

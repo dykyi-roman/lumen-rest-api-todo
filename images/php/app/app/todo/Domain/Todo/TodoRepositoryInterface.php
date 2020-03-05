@@ -17,4 +17,12 @@ interface TodoRepositoryInterface
     public function deleteTodo(int $id): bool;
 
     public function show(int $id): ?Todo;
+
+    /**
+     * @param int   $userId
+     * @param array $filters
+     *
+     * @return Todo[] iterable
+     */
+    public function findByFilters(int $userId, array $filters = []): iterable;
 }

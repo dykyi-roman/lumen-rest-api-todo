@@ -33,9 +33,30 @@ final class TodoRepository implements TodoRepositoryInterface
         return Todo::where('id', $id)->first();
     }
 
+    /**
+     * @param int   $id
+     * @param array $filters
+     *
+     * @return Todo[] iterable
+     */
+    public function findByFilters(int $id, array $filters = []): iterable
+    {
+        if (empty($filters)) {
+            return Todo::where('user_id', $id)->get();
+        }
+
+        $todo = Todo::query();
+        foreach ($filters as $key => $value) {
+            $todo = $todo->where($key, $value);
+        }
+
+        return $todo->get();
+    }
+
     public function updateTodo(int $id, UpdateTodoCommand $command): void
     {
         Todo::find($id)->fill(array_filter($command->toArray()))->save();
     }
+
 }
 
