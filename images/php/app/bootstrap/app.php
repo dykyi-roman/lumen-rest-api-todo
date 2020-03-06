@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CorsMiddleware;
 use App\Providers\BackendServiceProvider;
 use App\Providers\EventServiceProvider;
 use Joselfonseca\LaravelTactician\Providers\LaravelTacticianServiceProvider;
@@ -80,6 +81,7 @@ $app->configure('app');
 
  $app->routeMiddleware([
      'auth' => App\Http\Middleware\Authenticate::class,
+     'cors' => CorsMiddleware::class,
  ]);
 
 /*

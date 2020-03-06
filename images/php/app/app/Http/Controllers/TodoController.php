@@ -20,6 +20,7 @@ class TodoController extends Controller
     {
         $this->auth = $auth;
         $this->middleware('auth');
+        $this->middleware('cors');
     }
 
     public function index(Request $request): JsonResponse
