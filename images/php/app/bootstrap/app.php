@@ -120,6 +120,7 @@ $app->register(BackendServiceProvider::class);
 $app->register(EventServiceProvider::class);
 $app->register(LaravelTacticianServiceProvider::class);
 $app->register(App\Providers\AppServiceProvider::class);
+$app->register(\Appzcoder\LumenRoutesList\RoutesCommandServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
