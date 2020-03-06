@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Events;
+namespace App\todo\Domain\User\Event;
 
-use App\Listeners\UserRegisteredListener;
+use App\Events\Event;
 use App\Users;
 
 /**

@@ -7,7 +7,7 @@ namespace App\todo\Infrastructure\Repositories\Eloquent;
 use App\Todo;
 use App\todo\Application\Command\CreateTodoCommand;
 use App\todo\Application\Command\UpdateTodoCommand;
-use App\todo\Domain\Todo\TodoRepositoryInterface;
+use App\todo\Domain\Todo\Repository\TodoRepositoryInterface;
 
 final class TodoRepository implements TodoRepositoryInterface
 {

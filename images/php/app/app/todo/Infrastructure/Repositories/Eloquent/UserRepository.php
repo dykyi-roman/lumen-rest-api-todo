@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\todo\Infrastructure\Repositories\Eloquent;
 
-use App\Exceptions\UserNotFoundException;
+use App\todo\Domain\User\Exceptions\UserNotFoundException;
 use App\todo\Application\Command\RegisterUserCommand;
-use App\todo\Domain\User\UserRepositoryInterface;
+use App\todo\Domain\User\Repository\UserRepositoryInterface;
 use App\Users;
 use Illuminate\Support\Facades\Hash;
 
@@ -38,7 +38,7 @@ final class UserRepository implements UserRepositoryInterface
             throw new UserNotFoundException('User not found');
         }
 
-        Users::where('email', $email)->update(['api_token' => '']);
+        Users::where('email', $email)->update(['api_token' => (new \DateTime())->getTimestamp()]);
     }
 
     public function findUserByEmail(string $email): ?Users

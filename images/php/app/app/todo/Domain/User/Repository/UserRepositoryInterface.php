@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\todo\Domain\User;
+namespace App\todo\Domain\User\Repository;
 
 use App\todo\Application\Command\RegisterUserCommand;
 use App\Users;

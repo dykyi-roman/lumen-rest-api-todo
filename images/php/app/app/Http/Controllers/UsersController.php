@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\RegisterUserValidationException;
-use App\Exceptions\UserNotFoundException;
-use App\todo\Domain\User\ClearUserToken;
-use App\todo\Domain\User\LoginUser;
-use App\todo\Domain\User\RegisterUser;
-use App\todo\Domain\User\TokenGenerator;
+use App\todo\Domain\User\Exceptions\RegisterUserValidationException;
+use App\todo\Domain\User\Exceptions\UserNotFoundException;
+use App\todo\Domain\User\Service\ClearUserToken;
+use App\todo\Domain\User\Service\LoginUser;
+use App\todo\Domain\User\Service\RegisterUser;
+use App\todo\Domain\User\Service\TokenGenerator;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller

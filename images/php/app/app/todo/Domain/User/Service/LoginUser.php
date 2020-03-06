@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\todo\Domain\User;
+namespace App\todo\Domain\User\Service;
 
+use App\todo\Domain\User\Repository\UserRepositoryInterface;
 use App\Users;
 use Illuminate\Support\Facades\Hash;
 

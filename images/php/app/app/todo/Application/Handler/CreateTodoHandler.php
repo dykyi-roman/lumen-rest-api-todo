@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\todo\Application\Handler;
 
-use App\Events\TodoCreatedEvent;
+use App\todo\Domain\Todo\Event\TodoCreatedEvent;
 use App\todo\Application\Command\CreateTodoCommand;
-use App\todo\Domain\Todo\TodoRepositoryInterface;
+use App\todo\Domain\Todo\Repository\TodoRepositoryInterface;
 use Illuminate\Support\Facades\Event;
 
 final class CreateTodoHandler

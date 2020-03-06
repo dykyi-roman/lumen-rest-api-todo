@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\todo\Domain\Todo;
+namespace App\todo\Domain\Todo\Repository;
 
 use App\Todo;
 use App\todo\Application\Command\CreateTodoCommand;

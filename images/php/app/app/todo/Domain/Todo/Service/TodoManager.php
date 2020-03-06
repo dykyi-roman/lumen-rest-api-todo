@@ -2,16 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\todo\Domain\Todo;
+namespace App\todo\Domain\Todo\Service;
 
-use App\Exceptions\CreateTodoValidationException;
 use App\Todo;
+use App\todo\Domain\Todo\Exceptions\CreateTodoValidationException;
 use App\todo\Application\Command\CreateTodoCommand;
 use App\todo\Application\Command\DeleteTodoCommand;
 use App\todo\Application\Command\UpdateTodoCommand;
 use App\todo\Application\Handler\CreateTodoHandler;
 use App\todo\Application\Handler\DeleteTodoHandler;
 use App\todo\Application\Handler\UpdateTodoHandler;
+use App\todo\Domain\Todo\Repository\TodoRepositoryInterface;
+use App\todo\Domain\Todo\Validator\CreateTodoValidator;
 use Joselfonseca\LaravelTactician\CommandBusInterface;
 
 final class TodoManager

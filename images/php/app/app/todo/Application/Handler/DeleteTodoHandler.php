@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\todo\Application\Handler;
 
-use App\Exceptions\TodoNotFoundExcaption;
+use App\todo\Domain\Todo\Exceptions\TodoNotFoundExcaption;
 use App\todo\Application\Command\DeleteTodoCommand;
-use App\todo\Domain\Todo\TodoRepositoryInterface;
+use App\todo\Domain\Todo\Repository\TodoRepositoryInterface;
 
 final class DeleteTodoHandler
 {

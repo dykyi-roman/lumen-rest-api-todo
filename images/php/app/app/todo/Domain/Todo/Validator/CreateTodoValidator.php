@@ -1,19 +1,19 @@
 <?php
 
-namespace App\todo\Domain\User;
+declare(strict_types=1);
 
-use App\Exceptions\RegisterUserValidationException;
+namespace App\todo\Domain\Todo\Validator;
+
+use App\todo\Domain\User\Exceptions\RegisterUserValidationException;
 use Illuminate\Support\Facades\Validator;
 use League\Tactician\Middleware;
 
-final class RegisterUserValidator implements Middleware
+final class CreateTodoValidator implements Middleware
 {
     protected array $rules = [
-        'first_name' => 'required',
-        'last_name' => 'required',
-        'mobile_number' => 'required',
-        'email' => 'required|email|unique:users',
-        'password' => 'required|min:3',
+        'name' => 'required',
+        'status' => 'required',
+        'category' => 'required',
     ];
 
     /**
@@ -33,3 +33,4 @@ final class RegisterUserValidator implements Middleware
         return $next($command);
     }
 }
+

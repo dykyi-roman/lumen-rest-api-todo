@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\todo\Domain\User;
+namespace App\todo\Domain\User\Service;
 
-use App\Exceptions\UserNotFoundException;
+use App\todo\Domain\User\Exceptions\UserNotFoundException;
 use App\todo\Application\Command\ClearUserTokenCommand;
 use App\todo\Application\Handler\ClearUserTokenHandler;
 use Joselfonseca\LaravelTactician\CommandBusInterface;

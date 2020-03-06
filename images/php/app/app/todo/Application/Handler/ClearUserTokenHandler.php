@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\todo\Application\Handler;
 
 use App\todo\Application\Command\ClearUserTokenCommand;
-use App\todo\Domain\User\UserRepositoryInterface;
+use App\todo\Domain\User\Repository\UserRepositoryInterface;
 
 final class ClearUserTokenHandler
 {

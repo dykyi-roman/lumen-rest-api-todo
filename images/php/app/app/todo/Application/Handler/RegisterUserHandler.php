@@ -2,9 +2,9 @@
 
 namespace App\todo\Application\Handler;
 
-use App\Events\UserRegisteredEvent;
+use App\todo\Domain\User\Event\UserRegisteredEvent;
 use App\todo\Application\Command\RegisterUserCommand;
-use App\todo\Domain\User\UserRepositoryInterface;
+use App\todo\Domain\User\Repository\UserRepositoryInterface;
 use Illuminate\Support\Facades\Event;
 
 final class RegisterUserHandler

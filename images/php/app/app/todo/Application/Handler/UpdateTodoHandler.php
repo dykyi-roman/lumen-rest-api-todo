@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\todo\Application\Handler;
 
 use App\todo\Application\Command\UpdateTodoCommand;
-use App\todo\Domain\Todo\TodoRepositoryInterface;
+use App\todo\Domain\Todo\Repository\TodoRepositoryInterface;
 
 final class UpdateTodoHandler
 {

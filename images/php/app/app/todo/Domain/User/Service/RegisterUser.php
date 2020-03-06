@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\todo\Domain\User;
+namespace App\todo\Domain\User\Service;
 
-use App\Exceptions\RegisterUserValidationException;
+use App\todo\Domain\User\Exceptions\RegisterUserValidationException;
 use App\todo\Application\Command\RegisterUserCommand;
 use App\todo\Application\Handler\RegisterUserHandler;
+use App\todo\Domain\User\Validator\RegisterUserValidator;
 use Joselfonseca\LaravelTactician\CommandBusInterface;
 
 final class RegisterUser

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Events;
+namespace App\todo\Domain\Todo\Event;
 
+use App\Events\Event;
 use App\Todo;
 
 class TodoCreatedEvent extends Event

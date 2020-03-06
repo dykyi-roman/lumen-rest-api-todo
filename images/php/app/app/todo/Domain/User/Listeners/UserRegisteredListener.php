@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Listeners;
+namespace App\todo\Domain\User\Listeners;
 
-use App\Events\UserRegisteredEvent;
+use App\todo\Domain\User\Event\UserRegisteredEvent;
 use App\todo\Domain\NotificationInterface;
 
 class UserRegisteredListener

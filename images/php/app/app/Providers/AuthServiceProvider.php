@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\todo\Domain\User\UserRepositoryInterface;
+use App\todo\Domain\User\Repository\UserRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider

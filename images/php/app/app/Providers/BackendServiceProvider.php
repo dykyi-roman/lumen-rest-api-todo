@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use App\todo\Domain\NotificationInterface;
-use App\todo\Domain\Todo\TodoRepositoryInterface;
-use App\todo\Domain\User\UserRepositoryInterface;
+use App\todo\Domain\Todo\Repository\TodoRepositoryInterface;
+use App\todo\Domain\User\Repository\UserRepositoryInterface;
 use App\todo\Infrastructure\Notification\EmailNotification;
 use App\todo\Infrastructure\Repositories\Eloquent\TodoRepository;
 use App\todo\Infrastructure\Repositories\Eloquent\UserRepository;
