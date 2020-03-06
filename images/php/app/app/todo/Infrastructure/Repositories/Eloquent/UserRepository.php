@@ -7,7 +7,7 @@ namespace App\todo\Infrastructure\Repositories\Eloquent;
 use App\todo\Domain\User\Exceptions\UserNotFoundException;
 use App\todo\Application\Command\RegisterUserCommand;
 use App\todo\Domain\User\Repository\UserRepositoryInterface;
-use App\Users;
+use App\todo\Domain\User\Model\Users;
 use Illuminate\Support\Facades\Hash;
 
 final class UserRepository implements UserRepositoryInterface

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\todo\Domain\Todo;
 
-use App\Todo;
+use App\todo\Domain\Todo\Model\Todo;
 use App\todo\Domain\ModelTransformerInterface;
 
 final class TodoApiTransformer implements ModelTransformerInterface

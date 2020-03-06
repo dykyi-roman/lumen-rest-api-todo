@@ -3,7 +3,7 @@
 namespace App\todo\Domain\Todo\Event;
 
 use App\Events\Event;
-use App\Todo;
+use App\todo\Domain\Todo\Model\Todo;
 
 class TodoCreatedEvent extends Event
 {

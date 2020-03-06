@@ -2,7 +2,7 @@
 
 namespace App\todo\Domain\Todo;
 
-use App\Todo;
+use App\todo\Domain\Todo\Model\Todo;
 
 final class TodoMapper
 {

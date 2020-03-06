@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\todo\Domain\Todo\Repository;
 
-use App\Todo;
+use App\todo\Domain\Todo\Model\Todo;
 use App\todo\Application\Command\CreateTodoCommand;
 use App\todo\Application\Command\UpdateTodoCommand;
 

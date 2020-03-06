@@ -3,7 +3,7 @@
 namespace App\todo\Domain\User\Event;
 
 use App\Events\Event;
-use App\Users;
+use App\todo\Domain\User\Model\Users;
 
 /**
  * @see UserRegisteredListener

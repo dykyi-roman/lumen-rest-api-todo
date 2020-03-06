@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\todo\Domain\User\Repository;
 
 use App\todo\Application\Command\RegisterUserCommand;
-use App\Users;
+use App\todo\Domain\User\Model\Users;
 
 interface UserRepositoryInterface
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace App;
+namespace App\todo\Domain\User\Model;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;

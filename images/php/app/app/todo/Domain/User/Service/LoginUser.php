@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\todo\Domain\User\Service;
 
 use App\todo\Domain\User\Repository\UserRepositoryInterface;
-use App\Users;
+use App\todo\Domain\User\Model\Users;
 use Illuminate\Support\Facades\Hash;
 
 final class LoginUser

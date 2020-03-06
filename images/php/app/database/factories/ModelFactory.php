@@ -2,7 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Users;
+use App\todo\Domain\User\Model\Users;
 use Faker\Generator as Faker;
 
 /*
@@ -16,7 +16,7 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(RegisterUserRequest::class, function (Faker $faker) {
+$factory->define(Users::class, static function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->email,
