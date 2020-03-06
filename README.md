@@ -37,6 +37,12 @@ Todo:
 | /api/todo/{id} | PUT    | ANY    | AUTH  |
 | /api/todo/{id} | DELETE | ANY    | AUTH  |
 
+# Documentation
+
+How to generate documentation read [here](docs/README.md).
+
+![image](doc_image.png.png)
+
 
 ## Author
 [Dykyi Roman](https://www.linkedin.com/in/roman-dykyi-43428543/), e-mail: [mr.dukuy@gmail.com](mailto:mr.dukuy@gmail.com)
