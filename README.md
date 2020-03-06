@@ -21,7 +21,7 @@ Feel free to configure the default port 80 in `docker-compose.yml` to whatever y
 
 User:
 
-| Path           | Method | Scheme | Grand |
+| Path           | Method | Scheme | Grant |
 | -------------  | ------ | ------ | ----- |
 | /api/register  | POST   | ANY    | ALL   |
 | /api/login     | GET    | ANY    | ALL   |
@@ -29,7 +29,7 @@ User:
 
 Todo:
 
-| Path           | Method | Scheme | Grand |
+| Path           | Method | Scheme | Grant |
 | -------------  | ------ | ------ | ----- |
 | /api/todo      | POST   | ANY    | AUTH  |
 | /api/todo      | GET    | ANY    | AUTH  |
