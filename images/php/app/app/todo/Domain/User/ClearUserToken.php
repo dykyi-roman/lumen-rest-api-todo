@@ -16,6 +16,7 @@ final class ClearUserToken
     public function __construct()
     {
         $this->bus = app(CommandBusInterface::class);
+        $this->bus->addHandler(ClearUserTokenCommand::class, ClearUserTokenHandler::class);
     }
 
     /**
@@ -25,7 +26,6 @@ final class ClearUserToken
      */
     public function clear(array $data = []): void
     {
-        $this->bus->addHandler(ClearUserTokenCommand::class, ClearUserTokenHandler::class);
         $this->bus->dispatch(ClearUserTokenCommand::class, $data);
 
     }

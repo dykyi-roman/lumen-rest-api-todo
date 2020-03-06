@@ -23,6 +23,7 @@ final class RegisterUser
     {
         $this->token = $token;
         $this->bus = app(CommandBusInterface::class);
+        $this->bus->addHandler(RegisterUserCommand::class, RegisterUserHandler::class);
     }
 
     /**
@@ -35,7 +36,6 @@ final class RegisterUser
     public function registerUser(array $data = []): void
     {
         $data = array_merge($data, ['token' => $this->token]);
-        $this->bus->addHandler(RegisterUserCommand::class, RegisterUserHandler::class);
         $this->bus->dispatch(RegisterUserCommand::class, $data, $this->middleware);
     }
 
