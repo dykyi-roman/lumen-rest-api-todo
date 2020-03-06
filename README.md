@@ -41,7 +41,7 @@ Todo:
 
 How to generate documentation read [here](docs/README.md).
 
-![image](doc_image.png.png)
+![image](doc_image.png)
 
 
 ## Author
