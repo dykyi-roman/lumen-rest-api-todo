@@ -15,7 +15,7 @@ final class CreateTodoHandler
 
     private Event $event;
 
-    public function __construct(TodoRepositoryInterface $todoRepository,  Event $event)
+    public function __construct(TodoRepositoryInterface $todoRepository, Event $event)
     {
         $this->event = $event;
         $this->todoRepository = $todoRepository;

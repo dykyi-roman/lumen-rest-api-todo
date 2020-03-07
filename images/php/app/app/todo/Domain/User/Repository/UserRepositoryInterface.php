@@ -9,6 +9,8 @@ use App\todo\Domain\User\Model\Users;
 
 interface UserRepositoryInterface
 {
+    public function getAll(): iterable;
+
     public function findUserByEmail(string $email): ?Users;
 
     public function findUserByApiToken(string $token): ?Users;

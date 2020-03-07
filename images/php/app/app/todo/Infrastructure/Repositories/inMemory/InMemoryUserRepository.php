@@ -2,16 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\todo\Infrastructure\Repositories\Eloquent;
+namespace App\todo\Infrastructure\Repositories\inMemory;
 
-use App\todo\Domain\User\Exceptions\UserNotFoundException;
 use App\todo\Application\Command\RegisterUserCommand;
-use App\todo\Domain\User\Repository\UserRepositoryInterface;
+use App\todo\Domain\User\Repository\UserRepositoryInterface as UserRepositoryInterfaceAlias;
 use App\todo\Domain\User\Model\Users;
 use Illuminate\Support\Facades\Hash;
 
-final class UserRepository implements UserRepositoryInterface
+final class InMemoryUserRepository implements UserRepositoryInterfaceAlias
 {
+    private array $users = [];
+
     public function createNewUser(RegisterUserCommand $command): ?Users
     {
         $user = new Users();
@@ -24,41 +25,51 @@ final class UserRepository implements UserRepositoryInterface
         $user->email = $command->getEmail();
         $user->api_token = $command->getToken();
 
-        if ($user->save()) {
-            return $user;
+        $this->users[count($this->users) + 1] = $user;
+
+        return $user;
+    }
+
+    public function clearToken(string $email): void
+    {
+        // TODO
+    }
+
+    public function findUserByEmail(string $email): ?Users
+    {
+        foreach ($this->users as $id => $user) {
+            if ($user->email === $email) {
+                return $user;
+            }
         }
 
         return null;
     }
 
-    public function clearToken(string $email): void
-    {
-        $user = Users::where('email', $email)->first();
-        if (null === $user) {
-            throw new UserNotFoundException('User not found');
-        }
-
-        Users::where('email', $email)->update(['api_token' => (new \DateTime())->getTimestamp()]);
-    }
-
-    public function findUserByEmail(string $email): ?Users
-    {
-        return Users::where('email', $email)->first();
-    }
-
     public function findUserByApiToken(string $token): ?Users
     {
-        return Users::where('api_token', $token)->first();
+        foreach ($this->users as $id => $user) {
+            if ($user->api_token === $token) {
+                return $user;
+            }
+        }
+
+        return null;
     }
 
     public function refreshApiToken(string $email, string $token): void
     {
-        Users::where('email', $email)->update(['api_token' => $token]);
+        foreach ($this->users as $id => $user) {
+            if ($user->email === $email) {
+                $user->api_token = $token;
+                $this->users[$id] = $user;
+            }
+        }
     }
 
     public function getAll(): iterable
     {
-        return Users::all();
+        return new \ArrayIterator($this->users);
     }
 }
 

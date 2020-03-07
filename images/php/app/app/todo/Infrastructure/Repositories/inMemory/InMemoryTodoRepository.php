@@ -2,15 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\todo\Infrastructure\Repositories\Eloquent;
+namespace App\todo\Infrastructure\Repositories\inMemory;
 
 use App\todo\Domain\Todo\Model\Todo;
 use App\todo\Application\Command\CreateTodoCommand;
 use App\todo\Application\Command\UpdateTodoCommand;
 use App\todo\Domain\Todo\Repository\TodoRepositoryInterface;
 
-final class TodoRepository implements TodoRepositoryInterface
+final class InMemoryTodoRepository implements TodoRepositoryInterface
 {
+    private array $todo = [];
+
     public function createTodo(CreateTodoCommand $command): ?Todo
     {
         $todo = new Todo();
@@ -20,21 +22,25 @@ final class TodoRepository implements TodoRepositoryInterface
         $todo->status = $command->getStatus();
         $todo->datetime = $command->getDatetime();
         $todo->user_id = $command->getUserId();
-        if ($todo->save()) {
-            return $todo;
-        }
 
-        return null;
+        $this->todo[count($this->todo) + 1] = $todo;
+        return $todo;
     }
 
     public function deleteTodo(int $id): bool
     {
-        return 0 !== Todo::destroy($id);
+        if (isset($this->todo[$id]))
+        {
+            unset($this->todo[$id]);
+            return true;
+        }
+
+        return false;
     }
 
     public function show(int $id): ?Todo
     {
-        return Todo::where('id', $id)->first();
+        return 0 === $id ? null : $this->todo[$id];
     }
 
     /**
@@ -45,31 +51,24 @@ final class TodoRepository implements TodoRepositoryInterface
      */
     public function findByFilters(int $id, array $filters = []): iterable
     {
-        if (empty($filters)) {
-            return Todo::where('user_id', $id)->get();
-        }
+        $iterator = new \ArrayIterator();
 
-        $todo = Todo::query();
-        foreach ($filters as $key => $value) {
-            $todo = $todo->where($key, $value);
-        }
-
-        return $todo->get();
+        return $iterator;
     }
 
     public function updateTodo(int $id, UpdateTodoCommand $command): void
     {
-        Todo::find($id)->fill(array_filter($command->toArray()))->save();
+        // TODO
     }
 
     public function getByName(string $name): ?Todo
     {
-        return Todo::where('name', $name)->first();
+        // TODO
     }
 
     public function getAll(): iterable
     {
-        return Todo::all();
+        return new \ArrayIterator($this->todo);
     }
 }
 
