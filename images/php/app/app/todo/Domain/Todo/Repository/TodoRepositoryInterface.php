@@ -18,6 +18,8 @@ interface TodoRepositoryInterface
 
     public function show(int $id): ?Todo;
 
+    public function getByName(string $name): ?Todo;
+
     /**
      * @param int   $userId
      * @param array $filters

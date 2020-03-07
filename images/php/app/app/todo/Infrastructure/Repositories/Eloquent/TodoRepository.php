@@ -62,5 +62,9 @@ final class TodoRepository implements TodoRepositoryInterface
         Todo::find($id)->fill(array_filter($command->toArray()))->save();
     }
 
+    public function getByName(string $name): ?Todo
+    {
+        return Todo::where('name', $name)->first();
+    }
 }
 
