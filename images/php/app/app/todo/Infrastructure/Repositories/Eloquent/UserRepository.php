@@ -38,7 +38,7 @@ final class UserRepository implements UserRepositoryInterface
             throw new UserNotFoundException('User not found');
         }
 
-        Users::where('email', $email)->update(['api_token' => (new \DateTime())->getTimestamp()]);
+        Users::where('email', $email)->update(['api_token' => null]);
     }
 
     public function findUserByEmail(string $email): ?Users
