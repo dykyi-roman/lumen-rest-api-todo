@@ -28,15 +28,16 @@ final class RegisterUser
     }
 
     /**
-     * @param array $data
-     *
-     * @throws RegisterUserValidationException
+     * @param string $uuid
+     * @param array  $data
      *
      * @return void
+     *
+     * @throws RegisterUserValidationException
      */
-    public function registerUser(array $data = []): void
+    public function registerUser(string $uuid, array $data = []): void
     {
-        $data = array_merge($data, ['token' => $this->token]);
+        $data = array_merge($data, ['uuid' => $uuid, 'token' => $this->token]);
         $this->bus->dispatch(RegisterUserCommand::class, $data, $this->middleware);
     }
 

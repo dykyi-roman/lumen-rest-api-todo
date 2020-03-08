@@ -13,13 +13,14 @@ final class TodoRepository implements TodoRepositoryInterface
 {
     public function createTodo(CreateTodoCommand $command): ?Todo
     {
-        $todo = new Todo();
+        $todo = new Todo(['uuid' => $command->getUuid()]);
         $todo->name = $command->getName();
         $todo->description = $command->getDescription();
         $todo->category = $command->getCategory();
         $todo->status = $command->getStatus();
         $todo->datetime = $command->getDatetime();
-        $todo->user_id = $command->getUserId();
+        $todo->user_uuid = $command->getUserId();
+
         if ($todo->save()) {
             return $todo;
         }
@@ -27,26 +28,26 @@ final class TodoRepository implements TodoRepositoryInterface
         return null;
     }
 
-    public function deleteTodo(int $id): bool
+    public function deleteTodo(string $uuid): bool
     {
-        return 0 !== Todo::destroy($id);
+        return 0 !== Todo::destroy($uuid);
     }
 
-    public function show(int $id): ?Todo
+    public function show(string $uuid): ?Todo
     {
-        return Todo::where('id', $id)->first();
+        return Todo::where('uuid', $uuid)->first();
     }
 
     /**
-     * @param int   $id
+     * @param string $uuid
      * @param array $filters
      *
      * @return Todo[] iterable
      */
-    public function findByFilters(int $id, array $filters = []): iterable
+    public function findByFilters(string $uuid, array $filters = []): iterable
     {
         if (empty($filters)) {
-            return Todo::where('user_id', $id)->get();
+            return Todo::where('user_uuid', $uuid)->get();
         }
 
         $todo = Todo::query();
@@ -57,9 +58,9 @@ final class TodoRepository implements TodoRepositoryInterface
         return $todo->get();
     }
 
-    public function updateTodo(int $id, UpdateTodoCommand $command): void
+    public function updateTodo(string $uuid, UpdateTodoCommand $command): void
     {
-        Todo::find($id)->fill(array_filter($command->toArray()))->save();
+        Todo::find($uuid)->fill(array_filter($command->toArray()))->save();
     }
 
     public function getByName(string $name): ?Todo

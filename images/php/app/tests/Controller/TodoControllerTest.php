@@ -64,7 +64,10 @@ class TodoControllerTest extends TestCase
         $this->post(sprintf('/api/todo/?api_token=%s', $value['token']), $this->generateTodoContent(), self::HEADERS);
         $context = (array)$this->response->getOriginalContent();
 
-        $this->assertEquals(['status' => 'success'], $context);
+        $this->assertArrayHasKey('uuid', $context);
+
+        $value = &$this->getSharedVar();
+        $value['todo_uuid'] = $context['uuid'];
     }
 
     public function testTodoListWithDataSuccess(): void
@@ -72,15 +75,6 @@ class TodoControllerTest extends TestCase
         $value = &$this->getSharedVar();
         $this->get(sprintf('/api/todo?api_token=%s', $value['token']));
         $context = (array)$this->response->getOriginalContent();
-
-        /** @var \App\todo\Domain\Todo\Repository\TodoRepositoryInterface $todoRepository */
-        $todoRepository = $this->app->get(\App\todo\Domain\Todo\Repository\TodoRepositoryInterface::class);
-
-        $todo = $todoRepository->getByName($context['data'][0]['name']);
-        if ($todo){
-            $value = &$this->getSharedVar();
-            $value['todo_id'] = $todo->id;
-        }
 
         $this->assertNotEmpty($context['data']);
     }
@@ -91,7 +85,7 @@ class TodoControllerTest extends TestCase
     public function testShowTodoSuccess(): void
     {
         $value = &$this->getSharedVar();
-        $this->get(sprintf('/api/todo/%d/?api_token=%s', $value['todo_id'], $value['token']));
+        $this->get(sprintf('/api/todo/%s/?api_token=%s', $value['todo_uuid'], $value['token']));
         $context = (array)$this->response->getOriginalContent();
 
         $this->assertArrayHasKey('status', $context);
@@ -105,7 +99,7 @@ class TodoControllerTest extends TestCase
     public function testDeleteTodoSuccess(): void
     {
         $value = &$this->getSharedVar();
-        $this->delete(sprintf('/api/todo/%d/?api_token=%s', $value['todo_id'], $value['token']));
+        $this->delete(sprintf('/api/todo/%s/?api_token=%s', $value['todo_uuid'], $value['token']));
         $context = (array)$this->response->getOriginalContent();
         $this->assertEquals(['status' => 'success'], $context);
     }

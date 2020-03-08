@@ -5,6 +5,7 @@ use App\todo\Application\Command\DeleteTodoCommand;
 use App\todo\Application\Handler\DeleteTodoHandler;
 use App\todo\Domain\Todo\Exceptions\TodoNotFoundExcaption;
 use App\todo\Infrastructure\Repositories\inMemory\InMemoryTodoRepository;
+use Faker\Provider\Uuid;
 
 /**
  * @coversDefaultClass DeleteTodoHandler
@@ -22,7 +23,7 @@ class DeleteTodoHandlerTest extends TestCase
         $this->expectException(TodoNotFoundExcaption::class);
 
         $handler = new DeleteTodoHandler(new InMemoryTodoRepository());
-        $handler->handle(new DeleteTodoCommand(1442));
+        $handler->handle(new DeleteTodoCommand(Uuid::uuid()));
     }
 
     /**
@@ -32,6 +33,7 @@ class DeleteTodoHandlerTest extends TestCase
      */
     public function testTodoDeleteSuccess(): void
     {
+        $uuid = Uuid::uuid();
         $todoRepository = new InMemoryTodoRepository();
         $todoCommand = new CreateTodoCommand(
             'test-user-id',
@@ -40,12 +42,13 @@ class DeleteTodoHandlerTest extends TestCase
             '2020-01-01',
             'new',
             'new',
+            $uuid,
         );
 
         $todoRepository->createTodo($todoCommand);
         $this->assertEquals(1, $todoRepository->getAll()->count());
         $handler = new DeleteTodoHandler($todoRepository);
-        $handler->handle(new DeleteTodoCommand(1));
+        $handler->handle(new DeleteTodoCommand($uuid));
         $this->assertEquals(0, $todoRepository->getAll()->count());
     }
 }

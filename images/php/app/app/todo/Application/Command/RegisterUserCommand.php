@@ -17,6 +17,7 @@ final class RegisterUserCommand
     private string $email;
     private string $password;
     private string $token;
+    private string $uuid;
 
     public function __construct(
         string $first_name,
@@ -26,7 +27,8 @@ final class RegisterUserCommand
         string $birthday,
         string $email,
         string $password,
-        string $token
+        string $token,
+        string $uuid
     )
     {
         $this->first_name = $first_name;
@@ -37,6 +39,7 @@ final class RegisterUserCommand
         $this->email = $email;
         $this->password = $password;
         $this->token = $token;
+        $this->uuid = $uuid;
     }
 
     public function toArray(): array
@@ -90,6 +93,11 @@ final class RegisterUserCommand
     public function getToken(): string
     {
         return $this->token;
+    }
+
+    public function getUuid(): string
+    {
+        return $this->uuid;
     }
 }
 

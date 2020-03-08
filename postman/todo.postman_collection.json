@@ -18,8 +18,7 @@
 								"exec": [
 									"const uuid = Math.random().toString(36).substring(2, 5)",
 									"const email = \"test\" + uuid + \"x@gmail.com\";",
-									"pm.environment.set(\"email\", email);",
-									""
+									"pm.environment.set(\"email\", email);"
 								],
 								"type": "text/javascript"
 							}
@@ -185,6 +184,90 @@
 			"name": "todo",
 			"item": [
 				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "30ae3bc5-a8cd-4894-917b-da2dcb607abb",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var uuid = jsonData.uuid;",
+									"postman.setEnvironmentVariable(\"uuid\", uuid);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							},
+							{
+								"key": "X-Requested-With",
+								"value": "XMLHttpRequest",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "test-note",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "test-description",
+									"type": "text"
+								},
+								{
+									"key": "datetime",
+									"value": "2020-04-01 00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "new",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "new",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/api/todo?api_token={{api_token}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"todo"
+							],
+							"query": [
+								{
+									"key": "api_token",
+									"value": "{{api_token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "list",
 					"event": [
 						{
@@ -237,38 +320,36 @@
 					"response": []
 				},
 				{
-					"name": "create",
+					"name": "show",
 					"request": {
 						"auth": {
 							"type": "noauth"
 						},
-						"method": "POST",
+						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
 								"name": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"type": "text"
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
 							},
 							{
 								"key": "X-Requested-With",
-								"value": "XMLHttpRequest",
-								"type": "text"
+								"type": "text",
+								"value": "XMLHttpRequest"
 							}
 						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": []
-						},
 						"url": {
-							"raw": "http://localhost/api/todo?api_token={{api_token}}",
+							"raw": "http://localhost/api/todo/1/?api_token={{api_token}}",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"path": [
 								"api",
-								"todo"
+								"todo",
+								"1",
+								""
 							],
 							"query": [
 								{
@@ -315,48 +396,6 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "http://localhost/api/todo/1/?api_token={{api_token}}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"path": [
-								"api",
-								"todo",
-								"1",
-								""
-							],
-							"query": [
-								{
-									"key": "api_token",
-									"value": "{{api_token}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "show",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/x-www-form-urlencoded"
-							},
-							{
-								"key": "X-Requested-With",
-								"type": "text",
-								"value": "XMLHttpRequest"
-							}
-						],
 						"url": {
 							"raw": "http://localhost/api/todo/1/?api_token={{api_token}}",
 							"protocol": "http",

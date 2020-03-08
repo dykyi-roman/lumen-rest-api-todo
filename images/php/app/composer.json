@@ -9,7 +9,9 @@
         "appzcoder/lumen-routes-list": "^1.1",
         "irazasyed/larasupport": "^1.6",
         "joselfonseca/laravel-tactician": "^1.0",
-        "laravel/lumen-framework": "^6.0"
+        "laravel/lumen-framework": "^6.0",
+        "moontoast/math": "^1.2",
+        "ramsey/uuid": "^3.9"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.9.1",

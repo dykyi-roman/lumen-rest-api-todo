@@ -4,6 +4,7 @@ use App\todo\Application\Command\RegisterUserCommand;
 use App\todo\Application\Handler\RegisterUserHandler;
 use App\todo\Domain\User\Event\UserRegisteredEvent;
 use App\todo\Infrastructure\Repositories\inMemory\InMemoryUserRepository;
+use Faker\Provider\Uuid;
 use Illuminate\Support\Facades\Event;
 
 /**
@@ -19,6 +20,7 @@ class RegisterUserHandlerTest extends TestCase
         Event::fake();
         $handler = new RegisterUserHandler(new InMemoryUserRepository(), new Event());
         $todoCommand = new RegisterUserCommand(
+            Uuid::uuid(),
             'test-user-name',
             'test-user-laste-name',
             '+380948982443',

@@ -14,7 +14,7 @@ final class UserRepository implements UserRepositoryInterface
 {
     public function createNewUser(RegisterUserCommand $command): ?Users
     {
-        $user = new Users();
+        $user = new Users(['uuid' => $command->getUuid()]);
         $user->first_name = $command->getFirstName();
         $user->last_name = $command->getLastName();
         $user->mobile_number = $command->getMobileNumber();
@@ -23,7 +23,6 @@ final class UserRepository implements UserRepositoryInterface
         $user->password = Hash::make($command->getPassword());
         $user->email = $command->getEmail();
         $user->api_token = $command->getToken();
-
         if ($user->save()) {
             return $user;
         }

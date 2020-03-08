@@ -15,7 +15,7 @@ final class InMemoryTodoRepository implements TodoRepositoryInterface
 
     public function createTodo(CreateTodoCommand $command): ?Todo
     {
-        $todo = new Todo();
+        $todo = new Todo(['uuid' => $command->getUuid()]);
         $todo->name = $command->getName();
         $todo->description = $command->getDescription();
         $todo->category = $command->getCategory();
@@ -23,40 +23,41 @@ final class InMemoryTodoRepository implements TodoRepositoryInterface
         $todo->datetime = $command->getDatetime();
         $todo->user_id = $command->getUserId();
 
-        $this->todo[count($this->todo) + 1] = $todo;
+        $this->todo[$command->getUuid()] = $todo;
+
         return $todo;
     }
 
-    public function deleteTodo(int $id): bool
+    public function deleteTodo(string $uuid): bool
     {
-        if (isset($this->todo[$id]))
+        if (isset($this->todo[$uuid]))
         {
-            unset($this->todo[$id]);
+            unset($this->todo[$uuid]);
             return true;
         }
 
         return false;
     }
 
-    public function show(int $id): ?Todo
+    public function show(string $uuid): ?Todo
     {
-        return 0 === $id ? null : $this->todo[$id];
+        return 0 === $uuid ? null : $this->todo[$uuid];
     }
 
     /**
-     * @param int   $id
+     * @param string $uuid
      * @param array $filters
      *
      * @return Todo[] iterable
      */
-    public function findByFilters(int $id, array $filters = []): iterable
+    public function findByFilters(string $uuid, array $filters = []): iterable
     {
         $iterator = new \ArrayIterator();
 
         return $iterator;
     }
 
-    public function updateTodo(int $id, UpdateTodoCommand $command): void
+    public function updateTodo(string $uuid, UpdateTodoCommand $command): void
     {
         // TODO
     }

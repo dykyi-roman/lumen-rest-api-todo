@@ -19,17 +19,17 @@ final class UpdateTodoCommand
 
     private string $category;
 
-    private int $todo_id;
+    private string $todo_uuid;
 
     public function __construct(
-        int $todo_id,
+        string $todo_uuid,
         string $name = '',
         string $description = '',
         string $datetime = '',
         string $status = '',
         string $category = ''
     ) {
-        $this->todo_id = $todo_id;
+        $this->todo_uuid = $todo_uuid;
         $this->name = $name;
         $this->description = $description;
         $this->datetime = $datetime;
@@ -48,9 +48,9 @@ final class UpdateTodoCommand
         ];
     }
 
-    public function getTodoId(): int
+    public function getTodoId(): string
     {
-        return $this->todo_id;
+        return $this->todo_uuid;
     }
 
     public function getName(): string

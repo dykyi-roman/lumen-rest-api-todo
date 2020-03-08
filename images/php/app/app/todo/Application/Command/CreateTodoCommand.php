@@ -19,22 +19,26 @@ final class CreateTodoCommand
 
     private string $category;
 
-    private string $user_id;
+    private string $user_uuid;
+
+    private string $uuid;
 
     public function __construct(
-        string $user_id,
+        string $user_uuid,
         string $name,
         string $description,
         string $datetime,
         string $status,
-        string $category
+        string $category,
+        string $uuid
     ) {
-        $this->user_id = $user_id;
+        $this->user_uuid = $user_uuid;
         $this->name = $name;
         $this->description = $description;
         $this->datetime = $datetime;
         $this->status = $status;
         $this->category = $category;
+        $this->uuid = $uuid;
     }
 
     public function toArray(): array
@@ -50,7 +54,7 @@ final class CreateTodoCommand
 
     public function getUserId(): string
     {
-        return $this->user_id;
+        return $this->user_uuid;
     }
 
     public function getName(): string
@@ -78,5 +82,8 @@ final class CreateTodoCommand
         return $this->category;
     }
 
-
+    public function getUuid(): string
+    {
+        return $this->uuid;
+    }
 }

@@ -10,7 +10,7 @@ use App\todo\Domain\User\Service\ClearUserToken;
 use App\todo\Domain\User\Service\LoginUser;
 use App\todo\Domain\User\Service\RegisterUser;
 use App\todo\Domain\User\Service\TokenGenerator;
-use App\todo\Domain\User\Validator\LoginUserValidator;
+use Faker\Provider\Uuid;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -23,10 +23,11 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         try {
+            $uuid = Uuid::uuid();
             $token = TokenGenerator::generate();
-            (new RegisterUser($token))->registerUser($request->toArray());
+            (new RegisterUser($token))->registerUser($uuid, $request->toArray());
 
-            return response()->json(['status' => 'success', 'token' => 'Bearer ' . $token], 201);
+            return response()->json(['status' => 'success', 'uuid' => $uuid, 'token' => 'Bearer ' . $token], 201);
         } catch (RegisterUserValidationException $exception) {
             return response()->json(['status' => 'error', 'message' => $exception->getMessage()], 500);
         }

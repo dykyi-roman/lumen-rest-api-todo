@@ -14,19 +14,19 @@ interface TodoRepositoryInterface
 
     public function createTodo(CreateTodoCommand $command): ?Todo;
 
-    public function updateTodo(int $id, UpdateTodoCommand $command): void;
+    public function updateTodo(string $uuid, UpdateTodoCommand $command): void;
 
-    public function deleteTodo(int $id): bool;
+    public function deleteTodo(string $uuid): bool;
 
-    public function show(int $id): ?Todo;
+    public function show(string $uuid): ?Todo;
 
     public function getByName(string $name): ?Todo;
 
     /**
-     * @param int   $userId
+     * @param string $userUuid
      * @param array $filters
      *
      * @return Todo[] iterable
      */
-    public function findByFilters(int $userId, array $filters = []): iterable;
+    public function findByFilters(string $userUuid, array $filters = []): iterable;
 }

@@ -9,15 +9,15 @@ namespace App\todo\Application\Command;
  */
 final class DeleteTodoCommand
 {
-    private int $id;
+    private string $uuid;
 
-    public function __construct(int $id)
+    public function __construct(string $uuid)
     {
-        $this->id = $id;
+        $this->uuid = $uuid;
     }
 
-    public function getId(): int
+    public function getUuid(): string
     {
-        return $this->id;
+        return $this->uuid;
     }
 }

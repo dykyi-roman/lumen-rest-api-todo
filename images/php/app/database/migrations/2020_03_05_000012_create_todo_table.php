@@ -13,15 +13,15 @@ class CreateTodoTable extends Migration
         Schema::dropIfExists('todo');
 
         Schema::create('todo', static function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('uuid')->unique();
             $table->string('name');
             $table->string('description');
             $table->dateTime('datetime');
             $table->string('status');
             $table->string('category');
-            $table->integer('user_id')->unsigned();
+            $table->uuid('user_uuid');
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_uuid')->references('uuid')->on('users')->onDelete('cascade');
         });
     }
 

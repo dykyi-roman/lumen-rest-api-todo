@@ -15,7 +15,7 @@ final class InMemoryUserRepository implements UserRepositoryInterfaceAlias
 
     public function createNewUser(RegisterUserCommand $command): ?Users
     {
-        $user = new Users();
+        $user = new Users(['uuid' => $command->getUuid()]);
         $user->first_name = $command->getFirstName();
         $user->last_name = $command->getLastName();
         $user->mobile_number = $command->getMobileNumber();
@@ -25,7 +25,7 @@ final class InMemoryUserRepository implements UserRepositoryInterfaceAlias
         $user->email = $command->getEmail();
         $user->api_token = $command->getToken();
 
-        $this->users[count($this->users) + 1] = $user;
+        $this->users[$command->getUuid()] = $user;
 
         return $user;
     }

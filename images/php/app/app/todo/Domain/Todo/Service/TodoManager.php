@@ -26,46 +26,47 @@ final class TodoManager
         CreateTodoValidator::class
     ];
 
-    private int $userId;
+    private string $userUuid;
 
-    public function __construct(int $userId)
+    public function __construct(string $userUuid)
     {
-        $this->userId = $userId;
+        $this->userUuid = $userUuid;
         $this->bus = app(CommandBusInterface::class);
         $this->bus->addHandler(CreateTodoCommand::class, CreateTodoHandler::class);
         $this->bus->addHandler(DeleteTodoCommand::class, DeleteTodoHandler::class);
         $this->bus->addHandler(UpdateTodoCommand::class, UpdateTodoHandler::class);
     }
 
-    public static function init(int $userId): self
+    public static function init(string $userUuid): self
     {
-        return new self($userId);
+        return new self($userUuid);
     }
 
     /**
      * @param array $data
+     * @param string $uuid
      *
      * @throws CreateTodoValidationException
      */
-    public function create(array $data = []): void
+    public function create(string $uuid, array $data = []): void
     {
-        $data = array_merge($data, ['user_id' => $this->userId]);
+        $data = array_merge($data, ['user_uuid' => $this->userUuid, 'uuid' => $uuid]);
         $this->bus->dispatch(CreateTodoCommand::class, $data, $this->middleware);
     }
 
-    public function update(int $id, array $data = []): void
+    public function update(string $uuid, array $data = []): void
     {
         $this->middleware = [];
-        $data = array_merge($data, ['todo_id' => $id]);
+        $data = array_merge($data, ['todo_uuid' => $uuid]);
         $this->bus->dispatch(UpdateTodoCommand::class, $data, $this->middleware);
     }
 
-    public function show(int $id): ?Todo
+    public function show(string $uuid): ?Todo
     {
         /** @var TodoRepositoryInterface $todoRepository */
         $todoRepository = app(TodoRepositoryInterface::class);
 
-        return $todoRepository->show($id);
+        return $todoRepository->show($uuid);
     }
 
     /**
@@ -84,7 +85,7 @@ final class TodoManager
         /** @var TodoRepositoryInterface $todoRepository */
         $todoRepository = app(TodoRepositoryInterface::class);
 
-        return $todoRepository->findByFilters($this->userId, $criteria);
+        return $todoRepository->findByFilters($this->userUuid, $criteria);
     }
 
     public function delete(array $data = []): void

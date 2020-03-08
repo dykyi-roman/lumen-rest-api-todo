@@ -13,7 +13,7 @@ class CreateUsersTable extends Migration
         Schema::dropIfExists('users');
 
         Schema::create('users', static function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('uuid')->unique();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->unique();

@@ -26,7 +26,7 @@ final class DeleteTodoHandler
      */
     public function handle(DeleteTodoCommand $command): void
     {
-        $result = $this->todoRepository->deleteTodo($command->getId());
+        $result = $this->todoRepository->deleteTodo($command->getUuid());
         if (!$result) {
             throw new TodoNotFoundExcaption(self::TODO_NOT_FOUND_EXCEPTION);
         }
