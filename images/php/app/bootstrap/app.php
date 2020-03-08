@@ -3,6 +3,7 @@
 use App\Http\Middleware\CorsMiddleware;
 use App\Providers\BackendServiceProvider;
 use App\Providers\EventServiceProvider;
+use App\todo\Domain\User\Validator\LoginUserValidator;
 use Joselfonseca\LaravelTactician\Providers\LaravelTacticianServiceProvider;
 
 require_once __DIR__.'/../vendor/autoload.php';

@@ -15,10 +15,7 @@ class UsersControllerTest extends TestCase
         $this->get('/api/login');
 
         $context = (array)$this->response->getOriginalContent();
-        $this->assertArrayHasKey('email', (array)$this->response->getOriginalContent());
-        $this->assertArrayHasKey('password', (array)$this->response->getOriginalContent());
-        $this->assertEquals([0 => 'The email field is required.'], $context['email']);
-        $this->assertEquals([0 => 'The password field is required.'], $context['password']);
+        $this->assertEquals($context['status'],'error');
     }
 
     /**
@@ -28,7 +25,7 @@ class UsersControllerTest extends TestCase
     {
         $this->get('/api/login?email=eeeee');
         $context = (array)$this->response->getOriginalContent();
-        $this->assertEquals([0 => 'The email must be a valid email address.'], $context['email']);
+        $this->assertEquals($context['status'],'error');
     }
 
     /**
@@ -67,7 +64,7 @@ class UsersControllerTest extends TestCase
     {
         $this->get('/api/login?email=' . 'test@gmail');
         $context = (array)$this->response->getOriginalContent();
-        $this->assertArrayHasKey('password', $context);
+        $this->assertEquals($context['status'],'error');
     }
 
     /**

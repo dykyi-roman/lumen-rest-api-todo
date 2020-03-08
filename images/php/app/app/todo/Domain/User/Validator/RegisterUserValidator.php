@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\todo\Domain\User\Validator;
 
-use App\Exceptions\RegisterUserValidationException;
+use App\todo\Domain\User\Exceptions\RegisterUserValidationException;
 use Illuminate\Support\Facades\Validator;
 use League\Tactician\Middleware;
 

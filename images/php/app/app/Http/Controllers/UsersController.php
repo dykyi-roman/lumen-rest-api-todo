@@ -10,6 +10,7 @@ use App\todo\Domain\User\Service\ClearUserToken;
 use App\todo\Domain\User\Service\LoginUser;
 use App\todo\Domain\User\Service\RegisterUser;
 use App\todo\Domain\User\Service\TokenGenerator;
+use App\todo\Domain\User\Validator\LoginUserValidator;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -33,14 +34,10 @@ class UsersController extends Controller
 
     public function login(Request $request, LoginUser $loginUser)
     {
-        $this->validate($request, [
-            'email' => 'required|email',
-            'password' => 'required|min:3',
-        ]);
-
-        $user = $loginUser->login($request->input('email',''), $request->input('password',''));
-        if (null === $user) {
-            return response()->json(['status' => 'error', 'message' => 'User not found'], 401);
+        try {
+            $user = $loginUser->login($request->input('email', ''), $request->input('password', ''));
+        } catch (\Throwable $exception) {
+            return response()->json(['status' => 'error', 'message' => $exception->getMessage()], 401);
         }
 
         return response()->json([
