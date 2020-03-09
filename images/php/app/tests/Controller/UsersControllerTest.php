@@ -12,7 +12,7 @@ class UsersControllerTest extends TestCase
      */
     public function testLoginWithoutParamsFailed(): void
     {
-        $this->get('/api/login');
+        $this->get('/api/user/login');
 
         $context = (array)$this->response->getOriginalContent();
         $this->assertEquals($context['status'],'error');
@@ -23,7 +23,7 @@ class UsersControllerTest extends TestCase
      */
     public function testLoginWithFakeEmailLoginParamFailed(): void
     {
-        $this->get('/api/login?email=eeeee');
+        $this->get('/api/user/login?email=eeeee');
         $context = (array)$this->response->getOriginalContent();
         $this->assertEquals($context['status'],'error');
     }
@@ -33,7 +33,7 @@ class UsersControllerTest extends TestCase
      */
     public function testLoginWithFakeCredentialLoginParamFailed(): void
     {
-        $this->get('/api/login?email=test@gmail.com&password=dddd');
+        $this->get('/api/user/login?email=test@gmail.com&password=dddd');
         $context = (array)$this->response->getOriginalContent();
         $this->assertEquals(['status' => 'error', 'message' => 'User not found'], $context);
     }
@@ -50,7 +50,7 @@ class UsersControllerTest extends TestCase
         $value['email'] = $email;
         $value['password'] = $password;
 
-        $this->post('/api/register', $this->generateUserContent($email, $password), self::HEADERS);
+        $this->post('/api/user/register', $this->generateUserContent($email, $password), self::HEADERS);
         $context = (array)$this->response->getOriginalContent();
 
         $this->assertArrayHasKey('status', $context);
@@ -62,7 +62,7 @@ class UsersControllerTest extends TestCase
      */
     public function testLoginWithoutPasswordFailed(): void
     {
-        $this->get('/api/login?email=' . 'test@gmail');
+        $this->get('/api/user/login?email=' . 'test@gmail');
         $context = (array)$this->response->getOriginalContent();
         $this->assertEquals($context['status'],'error');
     }
@@ -72,7 +72,7 @@ class UsersControllerTest extends TestCase
      */
     public function testLoginWithFakeCredentialsFailed(): void
     {
-        $this->get(sprintf('/api/login?email=%s&password=%s', 'test@gmail', 'sssss'));
+        $this->get(sprintf('/api/user/login?email=%s&password=%s', 'test@gmail', 'sssss'));
         $context = (array)$this->response->getOriginalContent();
         $this->assertEquals(['status' => 'error', 'message' => 'User not found'], $context);
     }
@@ -83,7 +83,7 @@ class UsersControllerTest extends TestCase
     public function testLoginSuccess(): void
     {
         $value = &$this->getSharedVar();
-        $this->get(sprintf('/api/login?email=%s&password=%s', $value['email'], $value['password']));
+        $this->get(sprintf('/api/user/login?email=%s&password=%s', $value['email'], $value['password']));
         $context = (array)$this->response->getOriginalContent();
 
         $this->assertArrayHasKey('status', $context);
@@ -96,7 +96,7 @@ class UsersControllerTest extends TestCase
     public function testLogoutSuccess(): void
     {
         $value = &$this->getSharedVar();
-        $this->get(sprintf('/api/logout?email=%s', $value['email']));
+        $this->get(sprintf('/api/user/logout?email=%s', $value['email']));
         $context = (array)$this->response->getOriginalContent();
 
         $this->assertArrayHasKey('status', $context);

@@ -75,13 +75,14 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost/api/register",
+							"raw": "http://localhost/api/user/register",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"path": [
 								"api",
+								"user",
 								"register"
 							]
 						}
@@ -92,28 +93,24 @@
 					"name": "login",
 					"event": [
 						{
-							"listen": "prerequest",
+							"listen": "test",
 							"script": {
-								"id": "547b2544-1fe3-4225-bf04-ec9e113202a8",
+								"id": "998766ce-36f8-4bff-a86d-d5cb87488e76",
 								"exec": [
-									""
+									"var jsonData = pm.response.json();",
+									"var  token = jsonData.token;",
+									"var res = token.split(' ');",
+									"console.log(res);",
+									"postman.setEnvironmentVariable(\"api_token\", res[1]);"
 								],
 								"type": "text/javascript"
 							}
 						},
 						{
-							"listen": "test",
+							"listen": "prerequest",
 							"script": {
-								"id": "d84f4f53-5b66-49be-9efc-c479dbbdaacc",
+								"id": "7f592ffc-7c18-4ce1-abdf-574049403d0a",
 								"exec": [
-									"var jsonData = pm.response.json();",
-									"vat token = jsonData.token;",
-									"var res = token.split(\" \");",
-									"",
-									"",
-									"console.log();",
-									"",
-									"postman.setEnvironmentVariable(\"token\", pm.collectionVariables.get('token'));",
 									""
 								],
 								"type": "text/javascript"
@@ -124,19 +121,20 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost/api/login?email=test2@gmail.com&password=testwW_",
+							"raw": "http://localhost/api/user/login?email={{email}}&password=testwW_",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"path": [
 								"api",
+								"user",
 								"login"
 							],
 							"query": [
 								{
 									"key": "email",
-									"value": "test2@gmail.com"
+									"value": "{{email}}"
 								},
 								{
 									"key": "password",
@@ -153,19 +151,20 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost/api/logout?email=test2@gmail.com",
+							"raw": "http://localhost/api/user/logout?email={{email}}",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"path": [
 								"api",
+								"user",
 								"logout"
 							],
 							"query": [
 								{
 									"key": "email",
-									"value": "test2@gmail.com"
+									"value": "{{email}}"
 								},
 								{
 									"key": "",
@@ -300,7 +299,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost/api/todo?api_token={{api_token}}",
+							"raw": "http://localhost/api/todo?api_token={{api_token}}&status=new",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -313,6 +312,10 @@
 								{
 									"key": "api_token",
 									"value": "{{api_token}}"
+								},
+								{
+									"key": "status",
+									"value": "new"
 								}
 							]
 						}
@@ -340,7 +343,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost/api/todo/1/?api_token={{api_token}}",
+							"raw": "http://localhost/api/todo/{{uuid}}/?api_token={{api_token}}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -348,7 +351,7 @@
 							"path": [
 								"api",
 								"todo",
-								"1",
+								"{{uuid}}",
 								""
 							],
 							"query": [
@@ -397,7 +400,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost/api/todo/1/?api_token={{api_token}}",
+							"raw": "http://localhost/api/todo/{{uuid}}/?api_token={{api_token}}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -405,7 +408,7 @@
 							"path": [
 								"api",
 								"todo",
-								"1",
+								"{{uuid}}",
 								""
 							],
 							"query": [
@@ -439,7 +442,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost/api/todo/2?api_token={{api_token}}",
+							"raw": "http://localhost/api/todo/{{uuid}}?api_token={{api_token}}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -447,7 +450,7 @@
 							"path": [
 								"api",
 								"todo",
-								"2"
+								"{{uuid}}"
 							],
 							"query": [
 								{

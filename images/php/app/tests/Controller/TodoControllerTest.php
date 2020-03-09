@@ -15,7 +15,7 @@ class TodoControllerTest extends TestCase
         $email = 'test' . random_int(1, 10000) . '@gmail.com';
         $password = 'pass' . random_int(1, 10000);
 
-        $this->post('/api/register', $this->generateUserContent($email, $password), self::HEADERS);
+        $this->post('/api/user/register', $this->generateUserContent($email, $password), self::HEADERS);
         $context = (array)$this->response->getOriginalContent();
 
         $this->assertArrayHasKey('status', $context);
@@ -32,7 +32,7 @@ class TodoControllerTest extends TestCase
     public function testLoginSuccess(): void
     {
         $value = &$this->getSharedVar();
-        $this->get(sprintf('/api/login?email=%s&password=%s', $value['email'], $value['password']));
+        $this->get(sprintf('/api/user/login?email=%s&password=%s', $value['email'], $value['password']));
         $context = (array)$this->response->getOriginalContent();
 
         $value = &$this->getSharedVar();

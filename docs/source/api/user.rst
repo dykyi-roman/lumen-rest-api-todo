@@ -4,7 +4,7 @@ User
 Register
 ---------------------------------------
 
-**POST api/register**
+**POST api/user/register**
 
 Request:
 
@@ -32,7 +32,7 @@ Response:
 Login
 --------------------------
 
-**GET api/login**
+**GET api/user/login**
 
 Request:
 
@@ -65,7 +65,7 @@ Response:
 Logout
 -------------
 
-**GET api/logout**
+**GET api/user/logout**
 
 Request:
 
