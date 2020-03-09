@@ -8,8 +8,10 @@ This setup is great for writing quick apps in PHP using Lumen from an any Docker
 
 ```bash
 1) docker-compose up --build -d
-2) docker-compose exec -ti todo_php_1 bash
-3) cd ../ && php artisan migrate
+2) cp .env.example .env
+3) php artisan key:generate
+4) docker-compose exec -ti todo_php_1 bash
+5) cd ../ && php artisan migrate
 ```
 Navigate to [http://localhost:80](http://localhost:80) 
 
